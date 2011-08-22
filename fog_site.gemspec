@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{fog_site}
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brian P O'Rourke"]
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "VERSION",
+    "fog_site.gemspec",
     "lib/fog_site.rb",
     "test/helper.rb",
     "test/test_fog_site.rb"
