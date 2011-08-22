@@ -102,6 +102,7 @@ class FogSite
         if local_file_md5.nil? and @site.destroy_old_files
           puts "#{path}: deleted".red
           remote_file.destroy
+          @updated_paths << ("/" + path)
         elsif local_file_md5 == remote_file.etag
           puts "#{path}: unchanged".white
           @index.delete( path )
