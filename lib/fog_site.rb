@@ -7,7 +7,7 @@ require "colorize"
 #
 class FogSite
   attr_reader :domain_name
-  attr_writer :access_key_id, :secret_key
+  attr_writer :access_key_id, :secret_key, :fog_options
   attr_accessor :path, :destroy_old_files, :distribution_id
 
   def initialize( domain_name, attributes_map = {})
@@ -16,6 +16,10 @@ class FogSite
       setter = (name.to_s + "=").to_sym
       self.send(setter, val)
     end
+  end
+
+  def fog_options
+    @fog_options || {}
   end
 
   def access_key_id
@@ -152,7 +156,7 @@ class FogSite
         :provider              => 'AWS',
         :aws_access_key_id     => @site.access_key_id,
         :aws_secret_access_key => @site.secret_key
-      }
+      }.merge @site.fog_options
     end
 
     def assert_not_nil( value, error )
