@@ -74,8 +74,12 @@ class FogSite
     def make_directory
       domain = @site.domain_name
       puts "Using bucket: #{domain}".blue
-      @directory = connection.directories.create :key => domain,
-                                                 :public => true
+      @directory = connection.directories.get domain
+      unless @directory
+        puts "Creating nw bucket.".red
+        @directory = connection.directories.create :key => domain,
+                                                  :public => true
+      end
       connection.put_bucket_website(domain, 'index.html', :key => "404.html")
     end
 
