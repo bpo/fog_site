@@ -144,7 +144,7 @@ class FogSite
     end
 
     def cdn
-      @cdn ||= Fog::CDN.new( credentials )
+      @cdn ||= Fog::CDN.new( cdn_credentials )
     end
 
     def connection
@@ -157,6 +157,10 @@ class FogSite
         :aws_access_key_id     => @site.access_key_id,
         :aws_secret_access_key => @site.secret_key
       }.merge @site.fog_options
+    end
+
+    def cdn_credentials
+      credentials.delete_if { |k, v| k == :region }
     end
 
     def assert_not_nil( value, error )
