@@ -110,7 +110,7 @@ class FogSite
         if local_file_md5.nil? and @site.destroy_old_files
           puts "#{path}: deleted".red
           remote_file.destroy
-          @updated_paths << ("/" + path)
+          mark_updated( "/#{path}" )
         elsif local_file_md5 == remote_file.etag
           puts "#{path}: unchanged".white
           @index.delete( path )
@@ -118,13 +118,20 @@ class FogSite
           puts "#{path}: updated".green
           write_file( path )
           @index.delete( path )
-          @updated_paths << ("/" + path)
+          mark_updated( "/#{path}" )
         end
       end
 
       @index.each do |path, md5|
         puts "#{path}: new".green
         write_file( path )
+      end
+    end
+
+    def mark_updated( path )
+      @updated_paths << path
+      if path =~ /\/index\.html$/
+        @updated_paths << path.sub( /index\.html$/, '' )
       end
     end
 
@@ -144,7 +151,7 @@ class FogSite
     end
 
     def cdn
-      @cdn ||= Fog::CDN.new( credentials )
+      @cdn ||= Fog::CDN.new( cdn_credentials )
     end
 
     def connection
@@ -157,6 +164,10 @@ class FogSite
         :aws_access_key_id     => @site.access_key_id,
         :aws_secret_access_key => @site.secret_key
       }.merge @site.fog_options
+    end
+
+    def cdn_credentials
+      credentials.delete_if { |k, v| k == :region }
     end
 
     def assert_not_nil( value, error )
