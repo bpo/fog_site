@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "fog_site"
-  s.version = "0.3.0"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brian P O'Rourke"]
-  s.date = "2012-01-06"
+  s.date = "2012-05-29"
   s.description = "Simple utility gem for deploying static sites to S3 and CloudFront using fog."
   s.email = "bpo@somnambulance.net"
   s.extra_rdoc_files = [
@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/bpo/fog_site"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.11"
+  s.rubygems_version = "1.8.23"
   s.summary = "Deploys static sites to S3 using fog"
 
   if s.respond_to? :specification_version then
