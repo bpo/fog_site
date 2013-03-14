@@ -43,12 +43,18 @@ AWS credentials are read from the environment variables `AWSAccessKeyId` and
 
 ## Notes ##
 
+### Usage ###
+
+We use this tool internally at [Stovepipe Studios](http://www.stovepipestudios.com/)
+to manage our static domain deployments. We have a simple Rake script with a
+task for each of our different sites - each task builds a FogSite and has the
+configuration variables set according to that site's needs.
+
 ### Choice of Domains ###
-You can't point a CNAME to the apex of a zone, which means you can't use S3 +
-CloudFront to deploy to 'foo.com', you can only deploy to a subdomain like
-'www.foo.com'. If you want to have a URL like 'foo.com' work, you'll need to set
-up a lightweight server that can accept requests for 'foo.com' and send a 301
-permanent redirect to www.foo.com.
+DNSimple offers a [custom ALIAS record type](http://blog.dnsimple.com/zone-apex-naked-domain-alias-that-works/)
+that can be used for apex domains (e.g. foo.com rather than www.foo.com).
+Or you can set up a lightweight server that accepts requests
+for foo.com and redirects to the correct target.
 
 ### Cloudfront Cache Invalidation ###
 
@@ -57,7 +63,12 @@ CloudFront distributions. This works just fine, but if your content changes
 often, it's better (and cheaper) to use versioning. See the CloudFront developer
 guide for details on how to implement a versioning system.
 
+### See also ###
+
+* http://gun8.com/a-fun-little-workflow-for-developing-static-sites - blog post
+  featuring fog_site.
+
 ## Copyright ##
 
-Copyright (c) 2011 Brian P O'Rourke. See LICENSE.txt for
+Copyright (c) 2013 Brian P O'Rourke. See LICENSE.txt for
 further details.
