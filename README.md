@@ -25,6 +25,10 @@ If you're using CloudFront, specify a distribution ID:
 
     site.distribution_id = "Z99120CAFEBABE"
 
+You can set headers on a global level
+
+    site.headers = { 'Expires' => '0' }
+
 And push it to the cloud
 
     site.deploy!
