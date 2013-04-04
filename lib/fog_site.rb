@@ -1,14 +1,14 @@
 require 'fog'
 require "colorize"
 
-# 
+#
 # A FogSite represents a site to be deployed to S3 and CloudFront. This object
 # is a simple data structure, which is deployed with a `FogSite::Deployer`
 #
 class FogSite
   attr_reader :domain_name
   attr_writer :access_key_id, :secret_key, :fog_options
-  attr_accessor :path, :destroy_old_files, :distribution_id
+  attr_accessor :path, :destroy_old_files, :distribution_id, :headers
 
   def initialize( domain_name, attributes_map = {})
     @domain_name = domain_name
@@ -137,9 +137,15 @@ class FogSite
 
     # Push a single file out to S3.
     def write_file( path )
-      @directory.files.create :key => path,
-                              :body => File.open( path ),
-                              :public => true
+      opts = {
+        :key => path,
+        :body => File.open( path ),
+        :public => true
+      }
+
+      opts[:metadata] = @site.headers if @site.headers
+
+      @directory.files.create opts
     end
 
     # Compose and post a cache invalidation request to CloudFront. This will
