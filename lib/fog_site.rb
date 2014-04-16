@@ -1,7 +1,8 @@
 require 'fog'
 require "colorize"
 
-#
+Fog.credentials = { path_style: true }
+
 # A FogSite represents a site to be deployed to S3 and CloudFront. This object
 # is a simple data structure, which is deployed with a `FogSite::Deployer`
 #
